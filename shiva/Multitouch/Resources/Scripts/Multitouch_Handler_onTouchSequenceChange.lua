@@ -169,8 +169,8 @@ function Multitouch.onTouchSequenceChange( nTaps0, nX0, nY0, nTaps1, nX1, nY1, n
 
         local x = table.getAt( xs, tapIdx )
         local y = table.getAt( ys, tapIdx )
-        local dx = fingerX - x
-        local dy = fingerY - y
+        local dx = x - fingerX
+        local dy = y - fingerY
 
         user.sendEventImmediate( this.getUser(), this.sAiModel(), this.sHandlerFingerMoved(), fingerName, fingerX, fingerY, dx, dy )
 
