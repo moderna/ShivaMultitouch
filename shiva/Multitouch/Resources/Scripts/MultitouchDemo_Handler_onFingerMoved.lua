@@ -1,7 +1,7 @@
 --------------------------------------------------------------------------------
 --  Handler.......... : onFingerMoved
 --  Author........... : Gerold Meisinger (Modern Alchemists OG)
---  Description...... : 
+--  Description...... :
 --------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------
@@ -14,7 +14,7 @@ function MultitouchDemo.onFingerMoved( sName, nX, nY, nDX, nDY )
     if( hCmp ~= nil ) then
         local hudX = math.clamp( (nX + 1) / 2 * 100, 0, 100 )
         local hudY = math.clamp( (nY + 1) / 2 * 100, 0, 100 )
-        
+
         if    ( sName == "SliderBtn0" ) then
             hud.setComponentPosition( hCmp, 50, hudY )
             this.clrR( (nY + 1) / 2 * 127 )
@@ -31,7 +31,7 @@ function MultitouchDemo.onFingerMoved( sName, nX, nY, nDX, nDY )
             end
         end
     end
-	
+
 --------------------------------------------------------------------------------
 end
 --------------------------------------------------------------------------------

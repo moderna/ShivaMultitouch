@@ -1,16 +1,16 @@
 --------------------------------------------------------------------------------
 --  Function......... : tableSort
---  Author........... : 
---  Description...... : 
+--  Author........... :
+--  Description...... :
 --------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------
 function Multitouch.tableSort( tUnsorted, bOptSortByIdx )
 --------------------------------------------------------------------------------
-	
+
     local t = table.newInstance()
     table.copy( t, tUnsorted )
-    
+
     for i = 0, table.getSize( t ) - 1 do
         for j = i + 1, table.getSize( t ) - 1 do
             local v0 = table.getAt( t, i )
@@ -31,7 +31,7 @@ function Multitouch.tableSort( tUnsorted, bOptSortByIdx )
     if( this._DEBUG() ) then
         for i = 0, table.getSize( t ) - 1 do
             local v = table.getAt( t, i )
-            
+
             if( bOptSortByIdx == nil ) then
                 log.message( v )
             else
@@ -44,7 +44,7 @@ function Multitouch.tableSort( tUnsorted, bOptSortByIdx )
             end
         end
     end
-    
+
     return t
 
 --------------------------------------------------------------------------------

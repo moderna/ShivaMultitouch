@@ -1,15 +1,15 @@
 --------------------------------------------------------------------------------
 --  Handler.......... : onFingerDown
 --  Author........... : Gerold Meisinger (Modern Alchemists OG)
---  Description...... : 
+--  Description...... :
 --------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------
 function MultitouchDemo.onFingerDown( nX, nY )
 --------------------------------------------------------------------------------
-	
+
     local ret = ""
-    
+
     hud.setCursorPosition( this.getUser(), (nX + 1) / 2 * 100, (nY + 1) / 2 * 100 )
     local hCmp = hud.getUnderCursorComponent( this.getUser() )
     if( hCmp ~= nil and hud.getComponentType( hCmp ) == hud.kComponentTypeButton ) then
@@ -36,9 +36,9 @@ function MultitouchDemo.onFingerDown( nX, nY )
     end
 
     if( this._DEBUG() ) then log.message( string.format( "onFingerDown( nX=%+0.2f, nY=%+0.2f ) => %s", nX, nY, ret ) ) end
-    
+
     user.setAIVariable( this.getUser(), "Multitouch", "fingerName", ret )
-    
+
 --------------------------------------------------------------------------------
 end
 --------------------------------------------------------------------------------
