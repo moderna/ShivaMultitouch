@@ -29,6 +29,11 @@ function MultitouchDemo.onFingerMoved( sName, nX, nY, nDX, nDY )
                 hud.setComponentPosition( hCmp, hudX, hudY )
                 hud.setComponentVisible ( hCmp, true )
             end
+            
+            if( sName == "FingerCtn0" ) then
+                this.camRotX( this.camRotX() + nDY * 50 )
+                this.camRotY( this.camRotY() - nDX * 50 )
+            end
         end
     end
 

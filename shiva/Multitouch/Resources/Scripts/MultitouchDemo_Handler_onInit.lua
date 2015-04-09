@@ -26,6 +26,12 @@ function MultitouchDemo.onInit()
             hud.setComponentVisible( ctn, false )
         end
     end
+    
+    user.setScene( this.getUser(), "Multitouch" )
+    local hCam = user.getActiveCamera( this.getUser() )
+    local rx, ry, rz = object.getRotation( hCam, object.kGlobalSpace )
+    this.camRotX( rx )
+    this.camRotY( ry )
 
 --------------------------------------------------------------------------------
 end
