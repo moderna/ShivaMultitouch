@@ -1,13 +1,13 @@
 --------------------------------------------------------------------------------
 --  Handler.......... : onEnterFrame
 --  Author........... : Gerold Meisinger (Modern Alchemists OG)
---  Description...... :
+--  Description...... : 
 --------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------
 function MultitouchEmulation.onEnterFrame()
 --------------------------------------------------------------------------------
-
+	
     if( this.sAiModel() ~= nil and not string.isEmpty( this.sAiModel() ) ) then
         local ft = application.getTotalFrameTime()
         if( this.inputFlushLastFrame() ) then
@@ -18,11 +18,11 @@ function MultitouchEmulation.onEnterFrame()
                 end
             end
         end
-
+        
         local dt = application.getLastFrameTime()
 
         local keyXOld = this.keyX()
-        local keyYOld = this.keyY()
+        local keyYOld = this.keyY()    
         this.keyX( math.clamp( this.keyX() + dt * this.keyMoveHorz(), -1, 1 ) )
         this.keyY( math.clamp( this.keyY() + dt * this.keyMoveVert(), -1, 1 ) )
         local keyPosChanged = (keyXOld ~= this.keyX() or keyYOld ~= this.keyY())
@@ -30,7 +30,7 @@ function MultitouchEmulation.onEnterFrame()
         local keyCursorCtn = hud.getComponent( this.getUser(), "MultitouchEmulation.CursorKeyCtn" )
         if( keyCursorCtn ~= nil ) then
             hud.setComponentPosition( keyCursorCtn, (this.keyX() + 1) / 2 * 100, (this.keyY() + 1) / 2 * 100 )
-        end
+        end   
 
         local nTaps0 = 0
         local nX0    = 0
@@ -52,7 +52,7 @@ function MultitouchEmulation.onEnterFrame()
         local bMoved2 = false
         local bMoved3 = false
         local bMoved4 = false
-
+        
         if( this.keyTapIdx() ~= -1 ) then
             if    ( this.mouseTapIdx() ~= 0 ) then
                 nTaps0 = 1
@@ -76,17 +76,18 @@ function MultitouchEmulation.onEnterFrame()
                 nY1 = this.mouseY()
             end
         end
-
+        
         if( nTaps0 + nTaps1 + nTaps2 + nTaps3 + nTaps4 > 0 ) then
             if( this.keyChanged() or keyPosChanged or this.mouseChanged() ) then
-                user.sendEventImmediate( this.getUser(), this.sAiModel(), "onTouchSequenceChange", nTaps0, nX0, nY0, nTaps1, nX1, nY1, nTaps2, nX2, nY2, nTaps3, nX3, nY3, nTaps4, nX4, nY4 )
+                -- Note: sending all five fingers is not compatible with CPP
+                user.sendEventImmediate( this.getUser(), this.sAiModel(), "onTouchSequenceChange", nTaps0, nX0, nY0, nTaps1, nX1, nY1, nTaps2, nX2, nY2, nTaps3, nX3, nY3 )
             end
         end
 
         this.keyChanged  ( false )
         this.mouseChanged( false )
     end
-
+    
 --------------------------------------------------------------------------------
 end
 --------------------------------------------------------------------------------
