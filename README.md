@@ -8,7 +8,7 @@
 The problem with Shivas ```onTouchSequenceChange``` is that the indices of the fingers change if a another finger is added or removed:
 
   1. finger0 down => nTaps0=1 nTaps1=0
-  2. finger1 down => nTaps0=1 nTaps1=0
+  2. finger1 down => nTaps0=1 nTaps1=1
   3. finger0 up   => nTaps0=1(!) nTaps1=0
   4. finger0 down => nTaps0=1 nTaps1=0 (nTaps0 tracks finger0 again though)
 
@@ -23,6 +23,31 @@ For easier development this demo also provides a simple Multitouch emulation via
   3. Touches are sent to ```onFingerDown()```, ```onFingerUp()``` and ```onFingerMoved()``` handlers
   4. In ```onFingerDown()``` you have to set ```user.setAIVariable( this.getUser(), "Multitouch", "fingerName", "FINGER_NAME" )```. This identifies the finger for subsequent calls and is used to differenciate between use-cases like "finger in scene", "finger on HUD" etc.
 
+## FAQ
+
+### Q: Why are the cursors lagging?
+
+The multitouch update rate only runs on have the frame rate and the cursors are only updated on every onFingerMoved call.
+
+### Q: Why is the camera jumping when two fingers are quickly alternated for the first cursor?
+
+The multitouch update frequency is very low thus it's very likely that the tap of a new finger is detected exactly one frame after the previous finger which causes a very large delta.
+
+## Changelog
+
+### 1.2
+
+*  fixed a bug in C++ when Shiva sends an additional onTouchSequenceChanged event with all nTaps=0
+
+### 1.1
+
+*  C++ compatibility
+*  3D camera movement demo
+
+### 1.0
+
+*  Initial demo with 5 finger multi-touch support and RGB sliders for controlling the background color
+  
 ## Related work
 
 * [JPMultiTouch](http://www.shiva3dstore.com/index.php?route=product/product&product_id=87) - no C++ support

@@ -31,8 +31,12 @@ function MultitouchDemo.onFingerMoved( sName, nX, nY, nDX, nDY )
             end
             
             if( sName == "FingerCtn0" ) then
-                this.camRotX( this.camRotX() + nDY * 50 )
-                this.camRotY( this.camRotY() - nDX * 50 )
+                if( math.abs( nDX ) < 0.2 and math.abs( nDY ) < 0.2 ) then
+                    this.camRotX( this.camRotX() + nDY * 50 )
+                    this.camRotY( this.camRotY() - nDX * 50 )
+                end
+                
+                if( nDX > this.maxDX() ) then this.maxDX( nDX ) end
             end
         end
     end

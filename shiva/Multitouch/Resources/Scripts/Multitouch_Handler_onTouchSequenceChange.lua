@@ -8,6 +8,11 @@
 function Multitouch.onTouchSequenceChange( nTaps0, nX0, nY0, nTaps1, nX1, nY1, nTaps2, nX2, nY2, nTaps3, nX3, nY3, nTaps4, nX4, nY4 )
 --------------------------------------------------------------------------------
 	    
+	-- in CPP there is bug where onTouchSequenceChange will be called an additional time when the last finger is removed
+    if( nTaps0 == 0 ) then
+        return nil
+    end
+
     if( this._DEBUG() ) then
         if    ( nTaps4 == 1 ) then
             -- not CPP compatible
