@@ -57,7 +57,21 @@ A workaround would be to immediately deactivate mouse events when the user decid
 ### 1.0
 
 *  Initial demo with 5 finger multi-touch support and RGB sliders for controlling the background color
-  
+
+## Tested platforms
+
+This library has been tested and works on the following platforms:
+* Shiva Editor
+* Android
+* BlackBerry 2
+* BlackBerry 10
+* Windows Phone
+* Windows RT
+
+...but should work on any other platforms too.
+
+It is currently used in our new game [Sniper Ops 3D](http://games.modalog.at/sniper).
+
 ## Related work
 
 * [JPMultiTouch](http://www.shiva3dstore.com/index.php?route=product/product&product_id=87) - no C++ support
