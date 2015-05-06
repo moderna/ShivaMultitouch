@@ -7,12 +7,13 @@
 --------------------------------------------------------------------------------
 function Multitouch.onTouchSequenceChange( nTaps0, nX0, nY0, nTaps1, nX1, nY1, nTaps2, nX2, nY2, nTaps3, nX3, nY3, nTaps4, nX4, nY4 )
 --------------------------------------------------------------------------------
-	    
+
 	-- in CPP there is bug where onTouchSequenceChange will be called an additional time when the last finger is removed
     if( nTaps0 == 0 ) then
+        log.warning( "Multitouch.onTouchSequenceChange was called with no taps" )
         return nil
     end
-
+        
     if( this._DEBUG() ) then
         if    ( nTaps4 == 1 ) then
             -- not CPP compatible
@@ -63,7 +64,7 @@ function Multitouch.onTouchSequenceChange( nTaps0, nX0, nY0, nTaps1, nX1, nY1, n
             end
         end
     end
-
+    
     -- If the number of fingers differs from the number of taps we have to reassign them
     if( nTaps4 == nil ) then nTaps4 = 0 end -- happens with MultitouchEmulation
     local tapsN    = nTaps0 + nTaps1 + nTaps2 + nTaps3 + nTaps4    
@@ -72,7 +73,29 @@ function Multitouch.onTouchSequenceChange( nTaps0, nX0, nY0, nTaps1, nX1, nY1, n
     -- assert
     if( tapsN ~= table.getSize( xs ) or tapsN ~= table.getSize( ys ) ) then
         log.warning( "onTouchSequenceChange(): tapsN=" .. tapsN .. " and size of xs (n=" .. xs .. ") and ys (n=" .. ys .. ") cannot differ!" )
-    end
+    end    
+
+--     -- on Windows Surface there is a bug when used together with MultitouchEmulation
+--     -- where touch events are also sent again as mouse events 
+--     -- thus we need to remove all duplicate entries
+--     if( tapsN > 1 ) then
+--         for o = tapsN - 1, 0, -1 do
+--             local x0 = table.getAt( xs, o )
+--             local y0 = table.getAt( ys, o )
+-- 
+--             for i = o - 1, 0, -1 do
+--                 local x1 = table.getAt( xs, i )
+--                 local y1 = table.getAt( ys, i )
+--                 
+--                 if( x0 == x1 and y0 == y1 ) then
+--                     table.removeAt( xs, o )
+--                     table.removeAt( ys, o )
+--                     tapsN = tapsN - 1
+--                     break
+--                 end
+--             end
+--         end
+--     end
 
     local FINGER_D    = 0    
     local TAP_IDX     = 1
@@ -170,6 +193,7 @@ function Multitouch.onTouchSequenceChange( nTaps0, nX0, nY0, nTaps1, nX1, nY1, n
     end
             	
     -- assign the positions to each finger
+    --local str = ""
     for i = 0, hashtable.getSize( this.fingers() ) - 1 do
         local k          = hashtable.getKeyAt( this.fingers(), i )
         local fingerInfo = hashtable.get     ( this.fingers(), k )
@@ -181,11 +205,13 @@ function Multitouch.onTouchSequenceChange( nTaps0, nX0, nY0, nTaps1, nX1, nY1, n
         local dx = x - fingerX
         local dy = y - fingerY
         
+        --str = string.format( "%s    #%d %+0.2f %+0.2f", str, i, x, y )
         user.sendEventImmediate( this.getUser(), this.sAiModel(), this.sHandlerFingerMoved(), fingerName, fingerX, fingerY, dx, dy )
         
         table.setAt( fingerInfo, FINGER_X, x )
         table.setAt( fingerInfo, FINGER_Y, y )
-    end    
+    end   
+    --log.message( str )
 
 --------------------------------------------------------------------------------
 end

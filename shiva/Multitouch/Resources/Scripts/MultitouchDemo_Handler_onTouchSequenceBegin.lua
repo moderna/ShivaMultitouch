@@ -1,19 +1,18 @@
 --------------------------------------------------------------------------------
---  Handler.......... : onInit
---  Author........... : Gerold Meisinger (Modern Alchemists OG)
+--  Handler.......... : onTouchSequenceBegin
+--  Author........... : 
 --  Description...... : 
 --------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------
-function Multitouch.onInit()
+function MultitouchDemo.onTouchSequenceBegin()
 --------------------------------------------------------------------------------
-	
-	if( this.sAiModel() == nil or string.isEmpty( this.sAiModel() ) ) then
-        log.warning( "Multitouch.onInit(): sAiModel has to be set!" )
-    end
-    
-    -- DEV test duplicate finger removal
-    --user.sendEventImmediate( this.getUser(), "Multitouch", "onTouchSequenceChange", 1, 1.1, 1, 1, 1, 1.1, 1, 1, 1, 1, 1, 1 )
+
+    -- On Windows Surface tablets we receive both touch and mouse events for the same input
+    -- thus immediately deactivate mouse when the user uses touch.
+    if( system.getClientType() ~= system.kClientTypeEditor ) then
+        user.setAIVariable( this.getUser(), "MultitouchEmulation", "mouseEnabled", false )
+    end    
 	
 --------------------------------------------------------------------------------
 end

@@ -4,6 +4,7 @@ Thumbs.db
 *.luo
 *.lub
 *.ccz
+Project.cfg
 /shiva/*/Build
 /shiva/*/Saves
 /shiva/*/Models/Thumbnails

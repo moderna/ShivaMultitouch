@@ -9,8 +9,8 @@ function MultitouchEmulation.onEnterFrame()
 --------------------------------------------------------------------------------
 	
     if( this.sAiModel() ~= nil and not string.isEmpty( this.sAiModel() ) ) then
-        local ft = application.getTotalFrameTime()
         if( this.inputFlushLastFrame() ) then
+            local ft = application.getTotalFrameTime()
             if( ft ~= this.inputFlushTotalFrameTime() ) then
                 this.inputFlushLastFrame( false )
                 if( ft > 0 ) then
@@ -21,16 +21,24 @@ function MultitouchEmulation.onEnterFrame()
         
         local dt = application.getLastFrameTime()
 
-        local keyXOld = this.keyX()
-        local keyYOld = this.keyY()    
-        this.keyX( math.clamp( this.keyX() + dt * this.keyMoveHorz(), -1, 1 ) )
-        this.keyY( math.clamp( this.keyY() + dt * this.keyMoveVert(), -1, 1 ) )
-        local keyPosChanged = (keyXOld ~= this.keyX() or keyYOld ~= this.keyY())
-
         local keyCursorCtn = hud.getComponent( this.getUser(), "MultitouchEmulation.CursorKeyCtn" )
-        if( keyCursorCtn ~= nil ) then
-            hud.setComponentPosition( keyCursorCtn, (this.keyX() + 1) / 2 * 100, (this.keyY() + 1) / 2 * 100 )
-        end   
+        local keyPosChanged = false
+        if( this.keyEnabled() ) then
+            local keyXOld = this.keyX()
+            local keyYOld = this.keyY()    
+            this.keyX( math.clamp( this.keyX() + dt * this.keyMoveHorz(), -1, 1 ) )
+            this.keyY( math.clamp( this.keyY() + dt * this.keyMoveVert(), -1, 1 ) )
+            keyPosChanged = (keyXOld ~= this.keyX() or keyYOld ~= this.keyY())
+
+            if( keyCursorCtn ~= nil ) then
+                hud.setComponentVisible ( keyCursorCtn, true )
+                hud.setComponentPosition( keyCursorCtn, (this.keyX() + 1) / 2 * 100, (this.keyY() + 1) / 2 * 100 )
+            end   
+        else
+            if( keyCursorCtn ~= nil ) then
+                hud.setComponentVisible ( keyCursorCtn, false )
+            end
+        end
 
         local nTaps0 = 0
         local nX0    = 0

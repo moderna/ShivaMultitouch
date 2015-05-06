@@ -8,9 +8,18 @@
 function MultitouchDemo.onInit()
 --------------------------------------------------------------------------------
 
+    this._VERSION_MAJOR( 1 )
+    this._VERSION_MINOR( 3 )
+
     hud.newTemplateInstance ( this.getUser(), "MultitouchDemo", "MultitouchDemo" )
     input.enableMultiTouch  ( this.getUser(), true )
     --input.enableVirtualMouse( this.getUser(), true )
+    
+    local titleLbl = hud.getComponent( this.getUser(), "MultitouchDemo.TitleLbl" )
+    if( titleLbl ~= nil ) then
+        local titleStr = hud.getLabelText( titleLbl )
+        hud.setLabelText( titleLbl, string.format( titleStr, this._VERSION_MAJOR(), this._VERSION_MINOR() ) )
+    end
 
     -- set AiModel where Multitouch will send to
     user.setAIVariable( this.getUser(), "Multitouch", "sAiModel", "MultitouchDemo" )

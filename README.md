@@ -32,8 +32,18 @@ The multitouch update rate only runs on have the frame rate and the cursors are 
 ### Q: Why is the camera jumping when two fingers are quickly alternated for the first cursor?
 
 The multitouch update frequency is very low thus it's very likely that the tap of a new finger is detected exactly one frame after the previous finger which causes a very large delta.
+See ```MultitouchDemo.onFingerMoved()``` how this special case is treated.
+
+### Q: Why is the multitouch misbehaving on Windows Surface when I'm using MultitouchEmulation for Desktop devices?
+
+Shiva unfortunately fires the same input event once as a touch event and once as a mouse event.
+A workaround would be to immediately deactivate mouse events when the user decides to use multitouch, see ```MultitouchDemo.onTouchSequenceBegin()```.
 
 ## Changelog
+
+### 1.3
+
+* Allow to disable keyboard or mouse input in MultitouchEmulation to make it useable on multitouch and keyboard+mouse hybrid devices (Windows Surface).
 
 ### 1.2
 

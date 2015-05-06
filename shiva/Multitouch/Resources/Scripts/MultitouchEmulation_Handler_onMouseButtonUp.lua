@@ -8,14 +8,17 @@
 function MultitouchEmulation.onMouseButtonUp( nButton, nPointX, nPointY, nRayPntX, nRayPntY, nRayPntZ, nRayDirX, nRayDirY, nRayDirZ )
 --------------------------------------------------------------------------------
 	
-    if( this._DEBUG() ) then log.message( string.format( "onMouseButtonUp( nButton=%d )", nButton ) ) end
+    if( this.mouseEnabled() ) then
+        if( this._DEBUG() ) then log.message( string.format( "MultitouchEmulation.onMouseButtonUp( nButton=%d )", nButton ) ) end
 
-    if( nButton == 0 ) then
-        this.mouseChanged( true )
+        if( nButton == 0 ) then
+            this.mouseChanged( true )
 
-        this.mouseTapIdx( -1 )
-        if( this.keyTapIdx() == -1 ) then
-            user.sendEventImmediate( this.getUser(), this.sAiModel(), "onTouchSequenceEnd" )
+            local fingers = user.getAIVariable( this.getUser(), "Multitouch", "fingers" )
+            if( hashtable.getSize( fingers ) == 1 ) then
+                user.sendEventImmediate( this.getUser(), this.sAiModel(), "onTouchSequenceEnd" )
+            end
+            this.mouseTapIdx( -1 )
         end
     end
     
