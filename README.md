@@ -1,4 +1,4 @@
-# Modern Alchemists' Maltitouch v1.0
+# Modern Alchemists' Maltitouch v1.3
 
 ![5 fingers down](misc/Maltitouch fingers.png)
 ![multitouch scene and HUD](misc/Maltitouch hud.png)
